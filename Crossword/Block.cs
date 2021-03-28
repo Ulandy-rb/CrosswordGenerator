@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Crossword
 {
-	class Block
+	public class Block
 	{
 		public Letter letter { get; set; }
 

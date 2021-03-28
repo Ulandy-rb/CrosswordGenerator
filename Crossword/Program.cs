@@ -13,6 +13,7 @@ namespace Crossword
 		static void Main(string[] args)
 		{
 			Generator generator = new Generator();
+			generator.GenerateCrossword();
 		}
 	}
 }

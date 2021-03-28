@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Crossword
 {
-	class Letter
+	public class Letter
 	{
         public BlockCoordinates Coordinates;
         public char Character;

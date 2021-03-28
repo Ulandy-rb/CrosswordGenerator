@@ -9,10 +9,13 @@ namespace Crossword
 	public class Word 
     {
         private readonly Letter[] letters;
+        public int Length { get; set; }
 
+        public bool Placed { get; set; }
         public Word(string word)
         {
             word = word.ToUpper();
+            Length = word.Length;
             letters = new Letter[word.Length];
             for (int i = 0; i < word.Length; i++)
             {
@@ -20,9 +23,9 @@ namespace Crossword
             }
         }
 
-        public int Length()
+        public Letter[] Letters
 		{
-            return letters.Length;
+            get => letters;
 		}
 
         public string AsString()

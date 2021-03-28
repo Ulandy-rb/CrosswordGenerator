@@ -10,8 +10,8 @@ namespace Crossword
 	{
 		public int Compare(Word w1, Word w2)
 		{
-			var w1Lengt = w1.Length();
-			var w2Lenth = w2.Length();
+			var w1Lengt = w1.Length;
+			var w2Lenth = w2.Length;
 			if (w1Lengt > w2Lenth)
 				return -1;
 			if (w1Lengt < w2Lenth)
