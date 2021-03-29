@@ -9,9 +9,9 @@ namespace Crossword
 	public class Letter
 	{
         public BlockCoordinates Coordinates;
-        public char Character;
+        public string Character;
 
-        public Letter(char character)
+        public Letter(string character)
         {
             Character = character;
         }

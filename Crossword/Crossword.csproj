@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Block.cs" />
     <Compile Include="BlockCoordinates.cs" />
+    <Compile Include="Data.cs" />
     <Compile Include="Expansion.cs" />
     <Compile Include="Generator.cs" />
     <Compile Include="Letter.cs" />

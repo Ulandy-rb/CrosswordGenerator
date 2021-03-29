@@ -9,12 +9,15 @@ namespace Crossword
 {
 	public class Generator
 	{
+		private const int MINRANDOM = 5;
+		private const int MAXRANDOM = 20;
 		private readonly Regex regex = new Regex(@"^[А-Я]+$");
-		private readonly List<Word> words = new List<Word>() { new Word("mola"), new Word("lol"), /*new Word("ghk"),*/ new Word("holla")/*, new Word("mog")*/ };
+		private readonly List<Word> words;
 		private Block[,] blocks;
 		private int placedWordsCount = 0;
+		private int Count { get; set; }
 
-		public bool AllWordsValid(List<Word> list)
+		private bool AllWordsValid(List<Word> list)
 		{
 			foreach (var item in list)
 			{
@@ -26,8 +29,29 @@ namespace Crossword
 
 		public Generator()
 		{
-			//TODO word initilizer
+			try
+			{
+				var data = new Data();
+				words = data.Words;
+				if (AllWordsValid(words))
+				{
+					Random rand = new Random();
+					for (int i = words.Count - 1; i >= 1; i--)
+					{
+						int j = rand.Next(i + 1);
 
+						var tmp = words[j];
+						words[j] = words[i];
+						words[i] = tmp;
+					}
+					Count = rand.Next(MINRANDOM, MAXRANDOM);
+				}
+			}
+			catch(Exception ex)
+			{
+				throw ex;
+			}
+			
 		}
 
 		public Block[,] GenerateCrossword()
@@ -55,9 +79,9 @@ namespace Crossword
 
 		private bool PlaceFirstWord(Word word)
 		{
-			blocks = new Block[word.Length, 1];
+			blocks = new Block[word.Length + 1, 1];
 			var placement = new Placement(word);
-			for (int i = 0; i < word.Length; i++)
+			for (int i = 0; i < word.Length + 1; i++)
 			{
 				placement.Coordinates[i] = new BlockCoordinates(i, 0);
 			}
@@ -111,7 +135,7 @@ namespace Crossword
 			{
 				Block[,] blockState = (Block[,])blocks.Clone();
 				PlaceWordOnBoard(item);
-				if (placedWordsCount == words.Count || PlaceNextWord())
+				if (placedWordsCount == Count || placedWordsCount == words.Count || PlaceNextWord())
 				{
 					return true;
 				}
@@ -129,7 +153,7 @@ namespace Crossword
 			{
 				for (int y = 0; y < blocks.GetLength(1); y++)
 				{
-					for (int i = 0; i < word.Length; i++)
+					for (int i = 1; i < word.Length + 1; i++) 
 					{
 						var indexLetter = i;
 						var block = blocks[x, y];
@@ -158,7 +182,7 @@ namespace Crossword
 			placement = new Placement(word);
 			var currentBlock = new BlockCoordinates(blockCoordinates.X, blockCoordinates.Y);
 
-			placement.Coordinates = new BlockCoordinates[word.Length];
+			placement.Coordinates = new BlockCoordinates[word.Length + 1];
 			placement.Coordinates[indexLetter] = blockCoordinates;
 
 			for (int i = indexLetter - 1; i >= 0; i--)
@@ -177,10 +201,10 @@ namespace Crossword
 			}
 
 			currentBlock = new BlockCoordinates(blockCoordinates.X, blockCoordinates.Y);
-			for (int i = indexLetter + 1; i < word.Length; i++)
+			for (int i = indexLetter + 1; i < word.Length + 1; i++)
 			{
 				currentBlock.X++;
-				if (currentBlock.X >= blocks.GetLength(1))
+				if (currentBlock.X > blocks.GetLength(0) - 1)
 				{
 					placement.Expansion.Right++;
 				}
@@ -207,13 +231,19 @@ namespace Crossword
 		{
 			var block = OutOfBounds(currentBlock.X, currentBlock.Y) ? blocks[currentBlock.X, currentBlock.Y ] : null;
 			Block nextBlock = null, sideBlockL, sideBlockR, sideBlockU,sideBlockD;
+
 			if (direction == 'U' || direction == 'D')
 			{
 				if (direction == 'U') nextBlock = OutOfBounds(currentBlock.X, currentBlock.Y - 1) ? blocks[currentBlock.X, currentBlock.Y - 1]: null;
 				if (direction == 'D') nextBlock = OutOfBounds(currentBlock.X, currentBlock.Y + 1) ? blocks[currentBlock.X, currentBlock.Y + 1] : null;
 				sideBlockL = OutOfBounds(currentBlock.X - 1, currentBlock.Y) ? blocks[currentBlock.X - 1, currentBlock.Y] : null;
 				sideBlockR = OutOfBounds(currentBlock.X + 1, currentBlock.Y) ? blocks[currentBlock.X + 1, currentBlock.Y] : null;
-				if (nextBlock == null || nextBlock.letter.Character != word.Letters[indexLetter].Character
+				if (word.Letters[indexLetter].Character == word.Desccription)
+				{
+					if (block != null) return false;
+				}
+				else
+					if (block!= null && block.letter.Character != word.Letters[indexLetter].Character
 					|| sideBlockL != null || sideBlockR != null)
 					return false;
 			}
@@ -224,7 +254,12 @@ namespace Crossword
 				if (direction == 'L') nextBlock = OutOfBounds(currentBlock.X - 1, currentBlock.Y) ? blocks[currentBlock.X - 1, currentBlock.Y] : null;
 				sideBlockU = OutOfBounds(currentBlock.X, currentBlock.Y-1) ? blocks[currentBlock.X, currentBlock.Y - 1] : null;
 				sideBlockD = OutOfBounds(currentBlock.X, currentBlock.Y+1) ? blocks[currentBlock.X, currentBlock.Y+ 1] : null;
-				if (nextBlock == null || nextBlock.letter.Character != word.Letters[indexLetter].Character
+				if (word.Letters[indexLetter].Character == word.Desccription)
+				{
+					if (block != null) return false;
+				}
+				else
+				if (block != null && block.letter.Character != word.Letters[indexLetter].Character
 					|| sideBlockU != null || sideBlockD != null)
 					return false;
 			}
@@ -236,7 +271,7 @@ namespace Crossword
 			placement = new Placement(word);
 			var currentBlock = new BlockCoordinates(blockCoordinates.X, blockCoordinates.Y);
 
-			placement.Coordinates = new BlockCoordinates[word.Length];
+			placement.Coordinates = new BlockCoordinates[word.Length + 1];
 			placement.Coordinates[indexLetter] = blockCoordinates;
 
 			for (int i = indexLetter-1; i >= 0; i--) 
@@ -255,10 +290,10 @@ namespace Crossword
 			}
 
 			currentBlock = new BlockCoordinates(blockCoordinates.X, blockCoordinates.Y);
-			for (int i = indexLetter+1; i < word.Length ; i++)
+			for (int i = indexLetter+1; i < word.Length + 1 ; i++)
 			{
 				currentBlock.Y++;
-				if (currentBlock.Y >= blocks.GetLength(1))
+				if (currentBlock.Y > blocks.GetLength(1) - 1)
 				{
 					placement.Expansion.Down++;
 				}

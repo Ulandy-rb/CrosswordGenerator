@@ -8,19 +8,23 @@ namespace Crossword
 {
 	public class Word 
     {
+        private readonly string description;
         private readonly Letter[] letters;
+        public char Direction { get;set; }
         public int Length { get; set; }
 
         public bool Placed { get; set; }
-        public Word(string word)
+        public Word(string word, string description)
         {
+            this.description = description;
             word = word.ToUpper();
             Length = word.Length;
-            letters = new Letter[word.Length];
-            for (int i = 0; i < word.Length; i++)
+            letters = new Letter[word.Length+1];
+            for (int i = 1; i < word.Length+1; i++)
             {
-                letters[i] = new Letter(word[i]);
+                letters[i] = new Letter(word[i-1].ToString());
             }
+            letters[0] = new Letter(this.description);
         }
 
         public Letter[] Letters
@@ -28,12 +32,17 @@ namespace Crossword
             get => letters;
 		}
 
+        public string Desccription
+        {
+            get => description;
+        }
+
         public string AsString()
 		{
             string word = "";
-			foreach (var item in letters)
+			for (int i = 1; i < letters.Length; i++)
 			{
-                word += item.Character;
+                word += letters[i].Character;
 			}
             return word;
 		}

@@ -16,7 +16,7 @@ namespace Crossword
 		public Placement(Word word)
 		{
 			this.Word = word;
-			Coordinates = new BlockCoordinates[word.Length];
+			Coordinates = new BlockCoordinates[word.Length + 1];
 		}
 		
 	}
