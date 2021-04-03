@@ -104,5 +104,17 @@
       <Name>Crossword</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="—Pngtree—background frame with fluid style_1199250.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icons8-in-progress-64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icons8-play-64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icons8-delete-64.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

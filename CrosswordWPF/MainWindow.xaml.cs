@@ -23,13 +23,16 @@ namespace CrosswordWPF
 	public partial class MainWindow : Window
 	{
         private DrawingBlocks[,] drawingBlocks;
-        private double SizeFactor = 1;
-        private double BaseSize = 30;
         public bool CrosswordFailed = false;
         private Color backgroundColor = Colors.Black;
         public MainWindow()
 		{
 			InitializeComponent();
+            if(drawingBlocks==null)
+			{
+                ButtonCheck.Visibility = Visibility.Hidden;
+                ButtonDelete.Visibility = Visibility.Hidden;
+			}
 		}
 
 		private void Button_Generate(object sender, RoutedEventArgs e)
@@ -38,6 +41,8 @@ namespace CrosswordWPF
 			{
 				var generator = new Generator();
 				var blocks = generator.GenerateCrossword();
+                ButtonCheck.Visibility = Visibility.Visible;
+                ButtonDelete.Visibility = Visibility.Visible;
                 DrawingGrid(blocks);
 			}
 			catch(Exception ex)
@@ -46,10 +51,29 @@ namespace CrosswordWPF
 			}
 		}
 
-		private void Button_Click_1(object sender, RoutedEventArgs e)
+		private void Button_Check(object sender, RoutedEventArgs e)
 		{
-
+			for (int i = 0; i < drawingBlocks.GetLength(0); i++)
+			{
+				for (int j = 0; j < drawingBlocks.GetLength(1); j++)
+				{
+                    if(drawingBlocks[i,j]!=null)
+                        drawingBlocks[i, j].ShowTextBox();
+				}
+			}
 		}
+
+        private void Button_Delete(object sender, RoutedEventArgs e)
+        {
+            for (int i = 0; i < drawingBlocks.GetLength(0); i++)
+            {
+                for (int j = 0; j < drawingBlocks.GetLength(1); j++)
+                {
+                    if (drawingBlocks[i, j] != null)
+                        drawingBlocks[i, j].RemoveTextBox();
+                }
+            }
+        }
 
         private void DrawingGrid(Block[,] blocks)
         {
@@ -57,7 +81,7 @@ namespace CrosswordWPF
             MainGrid.Children.RemoveRange(0, MainGrid.Children.Count);
             Border background = new Border
             {
-                Background = new SolidColorBrush(backgroundColor)
+                Background = new SolidColorBrush(Colors.Transparent)
             };
             MainGrid.Children.Add(background);
             Grid.SetRowSpan(background, drawingBlocks.GetLength(1));
@@ -69,7 +93,7 @@ namespace CrosswordWPF
                 for (int x = 0; x < blocks.GetLength(0); x++)
                 {
                     if (blocks[x, y] == null) continue;
-                    var drawingBlock = new DrawingBlocks(blocks[x, y].letter, x, y);
+                    var drawingBlock = new DrawingBlocks(blocks[x, y].letter,blocks[x,y].direction, x, y);
                     drawingBlocks[x, y] = drawingBlock;
                     MainGrid.Children.Add(drawingBlock.Grid);
                 }
@@ -95,5 +119,29 @@ namespace CrosswordWPF
                 MainGrid.RowDefinitions.Add(row);
             }
         }
-    }
+
+		private void Ellipse_MouseLeftButtonDown_Close(object sender, MouseButtonEventArgs e)
+		{
+			try
+			{
+                Close();
+			}
+            catch (Exception ex)
+			{
+                MessageBox.Show(ex.Message);
+			}
+		}
+
+		private void Ellipse_MouseLeftButtonDown_Minimized(object sender, MouseButtonEventArgs e)
+		{
+            try
+            {
+                this.WindowState = WindowState.Minimized;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+	}
 }

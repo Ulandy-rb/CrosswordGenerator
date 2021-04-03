@@ -80,7 +80,7 @@ namespace Crossword
 		private bool PlaceFirstWord(Word word)
 		{
 			blocks = new Block[word.Length + 1, 1];
-			var placement = new Placement(word);
+			var placement = new Placement(word, 'H');
 			for (int i = 0; i < word.Length + 1; i++)
 			{
 				placement.Coordinates[i] = new BlockCoordinates(i, 0);
@@ -100,11 +100,13 @@ namespace Crossword
 		{
 			if (placement.Expansion.TotalX > 0 || placement.Expansion.TotalY > 0)
 				ExpandBlock(placement);
-			for (int i = 0; i < placement.Coordinates.Length; i++)
+			for (int i = 1; i < placement.Coordinates.Length; i++)
 			{
 				var item = placement.Coordinates[i];
 				blocks[item.X, item.Y] = new Block(placement.Word.Letters[i]);
 			}
+			var it = placement.Coordinates[0];
+			blocks[it.X, it.Y] = new Block(placement.Word.Letters[0], placement.direction);
 			placement.Word.Placed = true;
 			placedWordsCount++;
 		}
@@ -179,7 +181,7 @@ namespace Crossword
 
 		private bool CanPlaceHorizantal(Word word, BlockCoordinates blockCoordinates, int indexLetter, out Placement placement)
 		{
-			placement = new Placement(word);
+			placement = new Placement(word, 'H');
 			var currentBlock = new BlockCoordinates(blockCoordinates.X, blockCoordinates.Y);
 
 			placement.Coordinates = new BlockCoordinates[word.Length + 1];
@@ -243,9 +245,14 @@ namespace Crossword
 					if (block != null) return false;
 				}
 				else
-					if (block!= null && block.letter.Character != word.Letters[indexLetter].Character
+				{ 
+					if (block != null && block.letter.Character != word.Letters[indexLetter].Character
 					|| sideBlockL != null || sideBlockR != null)
-					return false;
+						return false;
+					if (word.Letters.Length - 1 == indexLetter && nextBlock != null)
+						return false;
+				}
+
 			}
 
 			if (direction == 'R' || direction == 'L')
@@ -259,16 +266,20 @@ namespace Crossword
 					if (block != null) return false;
 				}
 				else
-				if (block != null && block.letter.Character != word.Letters[indexLetter].Character
-					|| sideBlockU != null || sideBlockD != null)
-					return false;
+				{
+					if (block != null && block.letter.Character != word.Letters[indexLetter].Character
+					  || sideBlockU != null || sideBlockD != null)
+						return false;
+					if (word.Letters.Length - 1 == indexLetter && nextBlock != null)
+						return false;
+				}
 			}
 			return true;
 		}
 
 		private bool CanPlacedVertical(Word word, BlockCoordinates blockCoordinates, int indexLetter, out Placement placement)
 		{
-			placement = new Placement(word);
+			placement = new Placement(word, 'V');
 			var currentBlock = new BlockCoordinates(blockCoordinates.X, blockCoordinates.Y);
 
 			placement.Coordinates = new BlockCoordinates[word.Length + 1];

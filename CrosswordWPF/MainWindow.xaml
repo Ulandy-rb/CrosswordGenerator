@@ -6,12 +6,111 @@
         xmlns:local="clr-namespace:CrosswordWPF"
         mc:Ignorable="d"
         Title="Crossword" Height="450" Width="800"
-        WindowState="Maximized">
-    <Grid Name ="MainGrid" HorizontalAlignment="Left" Height="420" VerticalAlignment="Top" Width="718" RenderTransformOrigin="0.492,0.454">
-        <Grid HorizontalAlignment="Left" Height="416" Margin="718,0,-78,0" VerticalAlignment="Top" Width="78">
-            <Button Content="Генер" HorizontalAlignment="Left" Margin="0,90,0,0" VerticalAlignment="Top" Width="75" Click="Button_Generate"/>
-            <Button Content="Удалить" HorizontalAlignment="Left" Margin="0,183,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_1"/>
-            <Button Content="Провер" HorizontalAlignment="Left" Margin="0,273,0,0" VerticalAlignment="Top" Width="75"/>
+        AllowsTransparency="True"
+        WindowStyle="None"
+        WindowState="Maximized"
+        Background="Transparent">
+    <Border Background="WhiteSmoke" CornerRadius="10">
+        <Grid Name ="WindowGr" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Grid.ColumnDefinitions>
+                <!--cross-->
+                <ColumnDefinition>
+                </ColumnDefinition>
+                <!--buttons-->
+                <ColumnDefinition Width="0.07*">
+                </ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.02*">
+                    </ColumnDefinition>
+                    <ColumnDefinition>
+                    </ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.02*">
+                    </RowDefinition>
+                    <RowDefinition>
+                    </RowDefinition>
+                    <RowDefinition Height="0.02*">
+                    </RowDefinition>
+                </Grid.RowDefinitions>
+                <Border Grid.Row="1" Grid.Column="1" CornerRadius="30" BorderThickness="0">
+                    <Border.Background>
+                        <ImageBrush ImageSource="—Pngtree—background frame with fluid style_1199250.jpg" Stretch="Fill">
+                        </ImageBrush>
+                    </Border.Background>
+                </Border>
+                <Viewbox Grid.Row="1" Grid.Column="1">
+                    <Grid Name ="MainGrid" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    </Grid>
+                </Viewbox>
+            </Grid>
+            <Grid Grid.Column="1" Background="Transparent">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.2*">
+                    </RowDefinition>
+                    <RowDefinition >
+                    </RowDefinition>
+                    <RowDefinition>
+                    </RowDefinition>
+                    <RowDefinition>
+                    </RowDefinition>
+                </Grid.RowDefinitions>
+                <Ellipse Grid.Row="0"
+                         HorizontalAlignment="Center"
+                         VerticalAlignment="Center"
+                         Fill="Red"
+                         Height="20"
+                         Width="20" Margin="28,6,4,2" MouseLeftButtonDown="Ellipse_MouseLeftButtonDown_Close" ToolTip="Закрыть ">
+
+                </Ellipse>
+                <Ellipse Grid.Row="0"
+                         HorizontalAlignment="Center"
+                         VerticalAlignment="Center"
+                         Fill="Yellow"
+                         Height="20"
+                         Width="20" Margin="-2,6,34,2" MouseLeftButtonDown="Ellipse_MouseLeftButtonDown_Minimized" ToolTip="Свернуть">
+
+                </Ellipse>
+                <Viewbox Grid.Row="1">
+                    <Button
+                        Name="ButtonGenerate" 
+                        HorizontalAlignment="Stretch" 
+                        VerticalAlignment="Center"
+                        Click="Button_Generate"
+                        BorderThickness="0" ToolTip="Генерировать"
+                        >
+                        <Button.Background>
+                            <ImageBrush ImageSource="/icons8-play-64.png">
+                            </ImageBrush>
+                        </Button.Background>
+                    </Button>
+                </Viewbox>
+                <Viewbox Grid.Row="2">
+                    <Button Name="ButtonDelete" 
+                        HorizontalAlignment="Stretch" 
+                        VerticalAlignment="Center"
+                        BorderThickness="0" Click="Button_Delete" ToolTip="Очистить">
+                        <Button.Background>
+                            <ImageBrush ImageSource="/icons8-delete-64.png"  ></ImageBrush>
+                        </Button.Background>
+                    </Button>
+                </Viewbox>
+                <Viewbox Grid.Row ="3" >
+                    <Button  Name="ButtonCheck" 
+                         HorizontalAlignment="Stretch" 
+                        VerticalAlignment="Center"
+                        BorderThickness="0"
+                        Click="Button_Check" ToolTip="Проверить">
+                        <Button.Background>
+                            <ImageBrush ImageSource="/icons8-in-progress-64.png"  ></ImageBrush>
+                        </Button.Background>
+                    </Button>
+                </Viewbox>
+            </Grid>
         </Grid>
-    </Grid>
+    </Border>
 </Window>
+    

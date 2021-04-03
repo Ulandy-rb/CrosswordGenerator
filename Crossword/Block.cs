@@ -8,11 +8,12 @@ namespace Crossword
 {
 	public class Block
 	{
-		public Letter letter { get; set; }
-
-		public Block(Letter letter)
+		public readonly Letter letter;
+		public readonly char direction;
+		public Block(Letter letter, char direction = '\0')
 		{
 			this.letter = letter;
+			this.direction = direction;
 		}
 	}
 }

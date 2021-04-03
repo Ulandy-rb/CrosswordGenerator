@@ -8,8 +8,7 @@ namespace Crossword
 {
 	public class Letter
 	{
-        public BlockCoordinates Coordinates;
-        public string Character;
+        public readonly string Character;
 
         public Letter(string character)
         {
