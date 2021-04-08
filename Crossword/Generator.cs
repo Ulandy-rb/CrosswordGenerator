@@ -1,48 +1,46 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace Crossword
 {
 	public class Generator
 	{
-		private const int MINRANDOM = 5;
-		private const int MAXRANDOM = 20;
+		private const int MINRANDOM = 10;
+		private const int MAXRANDOM = 25;
 		private readonly Regex regex = new Regex(@"^[А-Я]+$");
 		private readonly List<Word> words;
 		private Block[,] blocks;
 		private int placedWordsCount = 0;
-		private int Count { get; set; }
+		private readonly int Count;
 
 		private bool AllWordsValid(List<Word> list)
 		{
 			foreach (var item in list)
 			{
 				if (!regex.Match(item.AsString()).Success || string.IsNullOrEmpty(item.ToString()))
-					throw new FormatException("Some words are not valid!");
+					throw new FormatException("Некторые слова имеют неверный формат");
 			}
 			return true;
 		}
 
-		public Generator()
+		public Generator() 
 		{
 			try
 			{
 				var data = new Data();
-				words = data.Words;
+				words = data.AddWords();
 				if (AllWordsValid(words))
 				{
 					Random rand = new Random();
 					for (int i = words.Count - 1; i >= 1; i--)
 					{
 						int j = rand.Next(i + 1);
-
+						words[i].Placed = false;
 						var tmp = words[j];
 						words[j] = words[i];
 						words[i] = tmp;
+						
 					}
 					Count = rand.Next(MINRANDOM, MAXRANDOM);
 				}
@@ -56,10 +54,7 @@ namespace Crossword
 
 		public Block[,] GenerateCrossword()
 		{
-			foreach (var item in words)
-			{
-				item.Placed = false;
-			}
+
 			if (!PlaceAllWord())
 				throw new Exception("Из этих слов нельзя составить сканворд");
 			else
@@ -96,6 +91,30 @@ namespace Crossword
 			return true;
 		}
 
+		private bool PlaceNextWord()
+		{
+			List<Placement> placements = new List<Placement>();
+			for (int i = 0; i < words.Count; i++)
+			{
+				if (words[i].Placed) continue;
+				placements.AddRange(FindPossiblePlacements(words[i]));
+			}
+			placements.Sort(new PlacementComp());
+			foreach (var item in placements)
+			{
+				Block[,] blockState = (Block[,])blocks.Clone();
+				PlaceWordOnBoard(item);
+				if (placedWordsCount == Count || placedWordsCount == words.Count || PlaceNextWord())
+				{
+					return true;
+				}
+				blocks = blockState;
+				placedWordsCount--;
+				item.Word.Placed = false;
+			}
+			return false;
+		}
+
 		private void PlaceWordOnBoard(Placement placement)
 		{
 			if (placement.Expansion.TotalX > 0 || placement.Expansion.TotalY > 0)
@@ -122,30 +141,6 @@ namespace Crossword
 				}
 			}
 			blocks = newBlock;
-		}
-
-		private bool PlaceNextWord()
-		{
-			List<Placement> placements = new List<Placement>();
-			for (int i = 0; i < words.Count; i++)
-			{
-				if (words[i].Placed) continue;
-				placements.AddRange(FindPossiblePlacements(words[i]));
-			}
-			placements.Sort(new PlacementComp());
-			foreach (var item in placements)
-			{
-				Block[,] blockState = (Block[,])blocks.Clone();
-				PlaceWordOnBoard(item);
-				if (placedWordsCount == Count || placedWordsCount == words.Count || PlaceNextWord())
-				{
-					return true;
-				}
-				blocks = blockState;
-				placedWordsCount--;
-				item.Word.Placed = false;
-			}
-			return false;
 		}
 
 		private IEnumerable<Placement> FindPossiblePlacements(Word word)

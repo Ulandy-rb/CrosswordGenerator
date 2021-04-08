@@ -8,10 +8,10 @@ namespace Crossword
 {
 	public class Placement
 	{
-		public Word Word { get; set; }
+		public readonly Word Word;
 
 		public readonly char direction;
-		public BlockCoordinates[] Coordinates { get; set; }
+		public  BlockCoordinates[] Coordinates { get; set; }
 
 		public Expansion Expansion { get; set; } = new Expansion();
 

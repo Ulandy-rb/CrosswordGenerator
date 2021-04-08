@@ -1,20 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Crossword
 {
-	public class Data
+	internal class Data
 	{
-		public List<Word> Words { get; set; }
+		private readonly List<Word> Words;
 		private const string pathDescriptions = "C:\\Users\\mi\\Documents\\Visual Studio\\C#\\CrosswordGenerator\\Crossword\\BDDescriptions.txt";
 		private const string pathWords = "C:\\Users\\mi\\Documents\\Visual Studio\\C#\\CrosswordGenerator\\Crossword\\BDWords.txt";
 		public Data()
 		{
 			Words = new List<Word>();
+		}
+
+		public List<Word> AddWords()
+		{
 			try
 			{
 				using (StreamReader readWords = new StreamReader(pathWords, System.Text.Encoding.UTF8))
@@ -26,10 +26,11 @@ namespace Crossword
 						Words.Add(new Word(lineWords, lineDescriptions));
 					}
 				}
+				return Words;
 			}
 			catch
 			{
-				throw new Exception("Отстутсвует база слов");
+				throw new IOException("Отстутсвует база слов");
 			}
 		}
 	}

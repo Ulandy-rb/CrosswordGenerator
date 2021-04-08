@@ -105,16 +105,19 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="—Pngtree—background frame with fluid style_1199250.jpg" />
+    <Resource Include="multimedia.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="icons8-in-progress-64.png" />
+    <Resource Include="sweeper.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="icons8-play-64.png" />
+    <Resource Include="ca.desrt.dconf-editor.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="icons8-delete-64.png" />
+    <Resource Include="Цветной-взрыв-2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="pictures_originals_2019Creative_Wallpaper_Orange-orange_smoke_on_a_black_background_135343_.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

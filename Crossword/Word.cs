@@ -10,9 +10,7 @@ namespace Crossword
     {
         private readonly string description;
         private readonly Letter[] letters;
-        public char Direction { get;set; }
         public int Length { get; set; }
-
         public bool Placed { get; set; }
         public Word(string word, string description)
         {
