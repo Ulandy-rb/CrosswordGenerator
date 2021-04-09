@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Crossword.Block">
+    <Position X="4" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIAAAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Block.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="letter" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Crossword.BlockCoordinates">
+    <Position X="7.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYAA=</HashCode>
+      <FileName>BlockCoordinates.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Crossword.Data">
+    <Position X="8.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAE=</HashCode>
+      <FileName>Data.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Field Name="Words" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Crossword.Expansion">
+    <Position X="9.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAQAAACACAAAAAAAI=</HashCode>
+      <FileName>Expansion.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Crossword.Generator">
+    <Position X="1.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAgAAAQAAAAACAAQCABQAgAAAwIQAACAABAQAhgA=</HashCode>
+      <FileName>Generator.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="blocks" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Field Name="words" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Crossword.Letter">
+    <Position X="6.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAA=</HashCode>
+      <FileName>Letter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Crossword.Placement">
+    <Position X="7.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAQAAAAIAAAAAAAAAAAIAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Placement.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="Word" />
+      <Property Name="Expansion" />
+      <Property Name="Coordinates" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Crossword.PlacementComp" BaseTypeListCollapsed="true">
+    <Position X="10.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAA=</HashCode>
+      <FileName>PlacementComp.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Crossword.Word">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAgAoAAAAIBABAAAAAAAAEAAAAAAAAA=</HashCode>
+      <FileName>Word.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="letters" />
+    </ShowAsAssociation>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

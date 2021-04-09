@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Crossword
 {
-	public class Expansion
+	internal class Expansion
 	{
 		public int Up { get; set; } = 0;
 		public int Down { get; set; } = 0;

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Crossword
 {
-	public class Placement
+	internal class Placement
 	{
 		public readonly Word Word;
 
@@ -20,7 +20,6 @@ namespace Crossword
 			this.Word = word;
 			this.direction = direction;
 			Coordinates = new BlockCoordinates[word.Length + 1];
-		}
-		
+		}		
 	}
 }

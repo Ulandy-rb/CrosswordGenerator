@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Crossword
 {
-	public class PlacementComp : IComparer<Placement>
+	internal class PlacementComp : IComparer<Placement>
 	{
         public int Compare(Placement a, Placement b)
         {

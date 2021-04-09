@@ -227,26 +227,15 @@ namespace Crossword
 		private bool LetterCanPlace(BlockCoordinates currentBlock, Word word, int indexLetter, char direction)
 		{
 			var block = OutOfBounds(currentBlock.X, currentBlock.Y) ? blocks[currentBlock.X, currentBlock.Y ] : null;
-			Block nextBlock = null, sideBlockL, sideBlockR, sideBlockU,sideBlockD;
+			Block nextBlock = null, sideBlockFirst = null, sideBlockSecond = null;
 
 			if (direction == 'U' || direction == 'D')
 			{
 				if (direction == 'U') nextBlock = OutOfBounds(currentBlock.X, currentBlock.Y - 1) ? blocks[currentBlock.X, currentBlock.Y - 1]: null;
 				if (direction == 'D') nextBlock = OutOfBounds(currentBlock.X, currentBlock.Y + 1) ? blocks[currentBlock.X, currentBlock.Y + 1] : null;
-				sideBlockL = OutOfBounds(currentBlock.X - 1, currentBlock.Y) ? blocks[currentBlock.X - 1, currentBlock.Y] : null;
-				sideBlockR = OutOfBounds(currentBlock.X + 1, currentBlock.Y) ? blocks[currentBlock.X + 1, currentBlock.Y] : null;
-				if (word.Letters[indexLetter].Character == word.Desccription)
-				{
-					if (block != null) return false;
-				}
-				else
-				{ 
-					if (block != null && block.letter.Character != word.Letters[indexLetter].Character
-					|| sideBlockL != null || sideBlockR != null)
-						return false;
-					if (word.Letters.Length - 1 == indexLetter && nextBlock != null)
-						return false;
-				}
+				sideBlockFirst = OutOfBounds(currentBlock.X - 1, currentBlock.Y) ? blocks[currentBlock.X - 1, currentBlock.Y] : null;
+				sideBlockSecond = OutOfBounds(currentBlock.X + 1, currentBlock.Y) ? blocks[currentBlock.X + 1, currentBlock.Y] : null;
+				
 
 			}
 
@@ -254,20 +243,21 @@ namespace Crossword
 			{
 				if (direction == 'R') nextBlock = OutOfBounds(currentBlock.X + 1, currentBlock.Y) ? blocks[currentBlock.X + 1, currentBlock.Y] : null;
 				if (direction == 'L') nextBlock = OutOfBounds(currentBlock.X - 1, currentBlock.Y) ? blocks[currentBlock.X - 1, currentBlock.Y] : null;
-				sideBlockU = OutOfBounds(currentBlock.X, currentBlock.Y-1) ? blocks[currentBlock.X, currentBlock.Y - 1] : null;
-				sideBlockD = OutOfBounds(currentBlock.X, currentBlock.Y+1) ? blocks[currentBlock.X, currentBlock.Y+ 1] : null;
-				if (word.Letters[indexLetter].Character == word.Desccription)
-				{
-					if (block != null) return false;
-				}
-				else
-				{
-					if (block != null && block.letter.Character != word.Letters[indexLetter].Character
-					  || sideBlockU != null || sideBlockD != null)
-						return false;
-					if (word.Letters.Length - 1 == indexLetter && nextBlock != null)
-						return false;
-				}
+				sideBlockFirst = OutOfBounds(currentBlock.X, currentBlock.Y-1) ? blocks[currentBlock.X, currentBlock.Y - 1] : null;
+				sideBlockSecond = OutOfBounds(currentBlock.X, currentBlock.Y+1) ? blocks[currentBlock.X, currentBlock.Y+ 1] : null;
+			}
+
+			if (word.Letters[indexLetter].Character == word.Desccription)
+			{
+				if (block != null) return false;
+			}
+			else
+			{
+				if (block != null && block.letter.Character != word.Letters[indexLetter].Character
+				|| sideBlockFirst != null || sideBlockSecond != null)
+					return false;
+				if (word.Letters.Length - 1 == indexLetter && nextBlock != null)
+					return false;
 			}
 			return true;
 		}
